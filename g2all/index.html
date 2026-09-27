@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>LOADING PRO — GoldHEN</title><link rel="stylesheet" href="../style.css">
+</head><body><div class="lp-page"><div class="lp-card"><div class="lp-brand"><span class="loading">LOADING</span><span class="pro">PRO</span></div><div class="lp-line"></div><div class="lp-kicker">GAMING &amp; ENTERTAINMENT DEVICES</div><h1 class="lp-title">LOADING PRO Multi-FW</h1>
+<p class="lp-sub">يتم الآن فحص إصدار النظام واختيار ملفات التشغيل المناسبة تلقائياً.</p>
+<div class="lp-spinner"></div><div id="msgs" class="lp-status">جاري تجهيز LOADING PRO...</div>
+<div class="lp-meta">PS4 • GoldHEN • Offline Ready</div>
+<div class="credits">شكر خاص: @_AlAzif &nbsp; ChendoChap &nbsp; @Kameleonre_ &nbsp; SiSTR0 &nbsp; Abc</div>
+</div></div><script>
+var uaFull = navigator.userAgent;
+var match = uaFull.match(/PlayStation 4[ /]([\d.]+)/i);
+var isPS4 = match !== null;
+var fwVersion = isPS4 ? match[1] : "Unknown";
+var fwNum = parseFloat(fwVersion);
+
+function onScriptError() {
+    msgs.innerHTML = "تعذر العثور على ملفات التشغيل. امسح بيانات المتصفح ثم ثبّت ملفات عدم الاتصال من جديد.";
+}
+
+if (!isPS4) {
+    document.addEventListener("DOMContentLoaded", () => {
+        msgs.innerHTML = "هذه الصفحة مخصصة لجهاز PS4 بإصدار 5.05 أو من 7.00 حتى 13.52.";
+    });
+} else {
+    if (window.applicationCache.status == '0') {
+        if (fwNum == 5.05 || fwNum == 5.07) {
+            window.location.replace("cache505.html");
+        } else if (fwNum >= 7.00 && fwNum <= 8.52) {
+            window.location.replace("cache700.html");
+        } else if (fwNum >= 9.00 && fwNum <= 9.60) {
+            window.location.replace("cache900.html");
+        } else if (fwNum >= 10.00 && fwNum <= 11.02) {
+            window.location.replace("cachecss.html");
+        } else if (fwNum >= 11.50 && fwNum <= 13.52) {
+            window.location.replace("cacheslopkit.html");
+        } else {
+            document.addEventListener("DOMContentLoaded", () => {
+                msgs.innerHTML = 'إصدار النظام غير مدعوم: <span style="color: red;">' + fwVersion + '</span>';
+            });
+        }
+    } else {
+        if (fwNum == 5.05 || fwNum == 5.07) {
+            var script = document.createElement('script');
+            script.src = "505/exploit.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        }
+        else if (fwNum >= 7.00 && fwNum <= 8.52) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "700/alert.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        }
+        else if (fwNum >= 9.00 && fwNum <= 9.60) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "900/alert.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        }
+        else if (fwNum >= 10.00 && fwNum <= 11.02) {
+            var script = document.createElement('script');
+            script.src = "css/main.js";
+            script.onerror = onScriptError;
+            script.onload = function () {
+                setTimeout(function () {
+                    doJb();
+                }, 500);
+            };
+            document.head.appendChild(script);
+        }
+        else if (fwNum >= 11.50 && fwNum <= 12.02) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "slopkit/chain_lapse.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        }
+        else if (fwNum >= 12.50 && fwNum <= 13.00) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "slopkit/chain_poops.js";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        }
+        else if (fwNum >= 13.02 && fwNum <= 13.52) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = "slopkit/jb.js?v=10";
+            script.onerror = onScriptError;
+            document.head.appendChild(script);
+        }
+    }
+}
+</script></body></html>

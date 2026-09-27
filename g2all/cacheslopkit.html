@@ -1,0 +1,9 @@
+<!doctype html><html lang="ar" dir="rtl" manifest="slopkit.manifest"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>LOADING PRO — Offline Cache</title><link rel="stylesheet" href="../style.css"></head><body><div class="lp-page"><div class="lp-card"><div class="lp-brand"><span class="loading">LOADING</span><span class="pro">PRO</span></div><div class="lp-line"></div><div class="lp-kicker">GAMING &amp; ENTERTAINMENT DEVICES</div><h1 class="lp-title">تثبيت وضع عدم الاتصال</h1><p class="lp-sub">يتم تجهيز ملفات LOADING PRO للعمل بدون إنترنت. لا تغلق المتصفح أثناء التثبيت.</p><div class="lp-progress"><span></span></div><div id="msgs" class="lp-status">بدء تثبيت ملفات عدم الاتصال...</div><div class="lp-meta">LOADING PRO • PS4 • OFFLINE CACHE</div></div></div><script>
+history.replaceState(null,null,'index.html');var histlength=history.length;history.go(-histlength);
+function DLProgress(e){Percent=(Math.round(e.loaded / e.total * 100));window.msgs.innerHTML="جاري تثبيت ملفات التشغيل دون إنترنت: " + Percent + "%";}
+function DisplayCacheProgress(){window.msgs.innerHTML="تم تثبيت ملفات التشغيل دون إنترنت بنجاح ✔";setTimeout(function(){window.msgs.innerHTML="أغلق المتصفح وافتحه من جديد...";},1500);}
+window.applicationCache.addEventListener("progress",DLProgress,false);
+window.applicationCache.oncached=function(e){DisplayCacheProgress();};
+window.applicationCache.onupdateready=function(e){DisplayCacheProgress();};
+window.applicationCache.onerror=function(e){window.msgs.innerHTML="حدث خطأ أثناء التثبيت. امسح بيانات المتصفح ثم افتحه من جديد...";};
+</script></body></html>
