@@ -1,0 +1,10 @@
+CACHE MANIFEST
+# Loading Pro unified host preview v1
+
+CACHE:
+index.html
+style.css
+../img.jpg
+
+NETWORK:
+*
