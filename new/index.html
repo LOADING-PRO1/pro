@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ar" dir="rtl" manifest="offline.manifest">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>LOADING PRO — Unified PS4 Host</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand" aria-label="Loading Pro">
+      <span class="brand-loading">LOADING</span><span class="brand-pro">PRO</span>
+      <span class="brand-sub">PS4 HOST</span>
+    </div>
+    <div class="cache-pill" id="cachePill"><span class="dot"></span><span id="cacheText">فحص الأوفلاين...</span></div>
+  </header>
+
+  <main class="hero">
+    <section class="panel">
+      <div class="eyebrow">SYSTEM DETECTED</div>
+      <h1 id="deviceTitle">جاري فحص جهازك...</h1>
+      <div class="firmware-row">
+        <span class="label">Firmware</span>
+        <strong id="firmwareValue">--.--</strong>
+        <span class="status" id="supportStatus">جاري الفحص</span>
+      </div>
+      <div class="route" id="routeText">سيتم اختيار ملفات التشغيل المناسبة تلقائياً.</div>
+
+      <button id="activateBtn" class="activate" type="button" disabled>
+        <span class="xkey">×</span>
+        <span>تفعيل التعديل</span>
+      </button>
+
+      <div class="progress-wrap" id="progressWrap" aria-hidden="true">
+        <div class="progress"><span id="progressBar"></span></div>
+        <div class="progress-text" id="progressText">جاهز للتشغيل</div>
+      </div>
+    </section>
+
+    <aside class="side-card">
+      <div class="side-title">LOADING PRO</div>
+      <div class="side-item"><span>✓</span> كشف الإصدار تلقائياً</div>
+      <div class="side-item"><span>✓</span> ملفات مخصصة لكل Firmware</div>
+      <div class="side-item"><span>✓</span> Offline بعد أول تحميل ناجح</div>
+      <div class="side-item"><span>✓</span> واجهة خفيفة لمتصفح PS4</div>
+    </aside>
+  </main>
+
+  <nav class="bottom-nav" aria-label="اختصارات">
+    <button type="button" onclick="location.href='../g2all/index.html'">Payloads</button>
+    <button type="button" id="offlineBtn">Offline Cache</button>
+    <button type="button" onclick="showInfo()">Info</button>
+  </nav>
+
+  <footer>LOADING PRO • GAMING &amp; ENTERTAINMENT DEVICES</footer>
+</div>
+
+<div class="modal" id="infoModal">
+  <div class="modal-card">
+    <h2>الإصدارات الموجودة في المشروع</h2>
+    <p>5.05 / 5.07</p>
+    <p>7.00 — 8.52</p>
+    <p>9.00 — 9.60</p>
+    <p>10.00 — 11.02</p>
+    <p>11.50 — 13.52</p>
+    <button type="button" onclick="hideInfo()">إغلاق</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ua = navigator.userAgent || '';
+  var m = ua.match(/PlayStation 4[ \/]([\d.]+)/i);
+  var isPS4 = !!m;
+  var fw = isPS4 ? m[1] : '';
+  var num = parseFloat(fw || '0');
+  var deviceTitle = document.getElementById('deviceTitle');
+  var firmwareValue = document.getElementById('firmwareValue');
+  var supportStatus = document.getElementById('supportStatus');
+  var routeText = document.getElementById('routeText');
+  var activateBtn = document.getElementById('activateBtn');
+  var progressWrap = document.getElementById('progressWrap');
+  var progressBar = document.getElementById('progressBar');
+  var progressText = document.getElementById('progressText');
+
+  function groupFor(v){
+    if (v === 5.05 || v === 5.07) return '5.05 / 5.07';
+    if (v >= 7.00 && v <= 8.52) return '7.00 — 8.52';
+    if (v >= 9.00 && v <= 9.60) return '9.00 — 9.60';
+    if (v >= 10.00 && v <= 11.02) return '10.00 — 11.02';
+    if (v >= 11.50 && v <= 13.52) return '11.50 — 13.52';
+    return '';
+  }
+
+  if (isPS4) {
+    deviceTitle.textContent = 'PlayStation 4';
+    firmwareValue.textContent = fw;
+    var group = groupFor(num);
+    if (group) {
+      supportStatus.textContent = 'مدعوم';
+      supportStatus.className = 'status ok';
+      routeText.textContent = 'المسار المناسب: ' + group;
+      activateBtn.disabled = false;
+    } else {
+      supportStatus.textContent = 'غير مدعوم';
+      supportStatus.className = 'status bad';
+      routeText.textContent = 'لا توجد ملفات تشغيل لهذا الإصدار داخل المشروع الحالي.';
+    }
+  } else {
+    deviceTitle.textContent = 'وضع المعاينة';
+    firmwareValue.textContent = 'PS4';
+    supportStatus.textContent = 'افتح من جهاز PS4';
+    supportStatus.className = 'status preview';
+    routeText.textContent = 'عند فتح الرابط على PS4 سيتم اكتشاف إصدار النظام تلقائياً.';
+  }
+
+  activateBtn.onclick = function(){
+    if (activateBtn.disabled) return;
+    activateBtn.disabled = true;
+    activateBtn.className = 'activate running';
+    progressWrap.style.display = 'block';
+    progressText.textContent = 'جاري تجهيز ملفات الإصدار ' + fw + '...';
+    progressBar.style.width = '68%';
+    setTimeout(function(){
+      progressBar.style.width = '100%';
+      progressText.textContent = 'فتح ملفات التشغيل...';
+      setTimeout(function(){ location.href = '../g2all/index.html'; }, 350);
+    }, 550);
+  };
+
+  var cachePill = document.getElementById('cachePill');
+  var cacheText = document.getElementById('cacheText');
+  function updateCache(){
+    try {
+      if (!window.applicationCache) {
+        cacheText.textContent = 'Offline غير متاح في هذا المتصفح';
+        cachePill.className = 'cache-pill warn';
+        return;
+      }
+      var s = window.applicationCache.status;
+      if (s === 0) {
+        cacheText.textContent = 'أول تحميل مطلوب';
+        cachePill.className = 'cache-pill warn';
+      } else if (s === 3) {
+        cacheText.textContent = 'جاري تحميل الأوفلاين';
+        cachePill.className = 'cache-pill loading';
+      } else if (s === 4) {
+        cacheText.textContent = 'تحديث جاهز';
+        cachePill.className = 'cache-pill loading';
+      } else {
+        cacheText.textContent = 'Offline Ready';
+        cachePill.className = 'cache-pill ready';
+      }
+    } catch(e) {
+      cacheText.textContent = 'Offline';
+    }
+  }
+  updateCache();
+  if (window.applicationCache) {
+    window.applicationCache.addEventListener('progress', updateCache, false);
+    window.applicationCache.addEventListener('cached', updateCache, false);
+    window.applicationCache.addEventListener('updateready', updateCache, false);
+    window.applicationCache.addEventListener('noupdate', updateCache, false);
+  }
+
+  document.getElementById('offlineBtn').onclick = function(){
+    try {
+      if (window.applicationCache) {
+        window.applicationCache.update();
+        cacheText.textContent = 'جاري فحص الكاش...';
+      }
+    } catch(e) {
+      cacheText.textContent = 'الكاش مثبت أو قيد التحديث';
+    }
+  };
+})();
+
+function showInfo(){ document.getElementById('infoModal').style.display='flex'; }
+function hideInfo(){ document.getElementById('infoModal').style.display='none'; }
+</script>
+</body>
+</html>
