@@ -61,8 +61,9 @@
         <span>9.00 — 9.60</span>
         <span>10.00 — 11.02</span>
         <span>11.50 — 13.52</span>
+        <span>14.00 • Experimental</span>
       </div>
-      <p>هذه القائمة مبنية على الملفات الموجودة فعلياً داخل مشروع <b>pro</b> حالياً.</p>
+      <p>الإصدارات حتى 13.52 تستخدم الملفات الموجودة فعلياً داخل مشروع <b>pro</b>. إصدار 14.00 ظاهر كمسار تجريبي منفصل.</p>
       <div class="mini-actions">
         <button id="cacheBtn">تحديث الأوفلاين</button>
         <button onclick="location.href='../g2all/index.html'">النسخة القديمة</button>
@@ -96,6 +97,7 @@
     if (v >= 9.00 && v <= 9.60) return {label:'9.00 — 9.60', url:'../g2all/index.html'};
     if (v >= 10.00 && v <= 11.02) return {label:'10.00 — 11.02', url:'../g2all/index.html'};
     if (v >= 11.50 && v <= 13.52) return {label:'11.50 — 13.52', url:'../g2all/index.html'};
+    if (v === 14.00) return {label:'14.00 • Experimental', url:'14/', experimental:true};
     return null;
   }
 
@@ -105,8 +107,14 @@
     fwValue.textContent = fw;
     route = routeFor(n);
     if (route) {
-      badge.textContent = 'مدعوم';
-      badge.className = 'badge ok';
+      if (route.experimental) {
+        badge.textContent = 'تجريبي';
+        badge.className = 'badge preview';
+        activateText.textContent = 'فتح صفحة 14.00';
+      } else {
+        badge.textContent = 'مدعوم';
+        badge.className = 'badge ok';
+      }
       routeLabel.textContent = route.label;
       activate.disabled = false;
     } else {
@@ -124,6 +132,10 @@
 
   activate.onclick = function(){
     if (!route || activate.disabled) return;
+    if (route.experimental) {
+      location.href = route.url;
+      return;
+    }
     activate.disabled = true;
     activate.className = 'activate working';
     activateText.textContent = 'جاري التفعيل...';
