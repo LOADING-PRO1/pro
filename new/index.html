@@ -54,18 +54,18 @@
     </section>
 
     <aside class="compat-card">
-      <h2>الإصدارات الجاهزة</h2>
+      <h2>مسارات الإصدارات المتاحة</h2>
       <div class="fw-list" dir="ltr">
         <span>5.05 / 5.07</span>
         <span>7.00 — 8.52</span>
         <span>9.00 — 9.60</span>
         <span>10.00 — 11.02</span>
         <span>11.50 — 13.52</span>
-        <span>14.00 • Experimental</span>
+        <span>14.00 • معلومات تجريبية فقط</span>
       </div>
-      <p>الإصدارات حتى 13.52 تستخدم الملفات الموجودة فعلياً داخل مشروع <b>pro</b>. إصدار 14.00 ظاهر كمسار تجريبي منفصل.</p>
+      <p>الإصدارات السابقة تستخدم مسارات التشغيل الموجودة في <b>pro</b>. وجود مسار لا يثبت نجاحه على كل نسخة فرعية. صفحة 14.00 للمعلومات فقط ولا تحتوي على حزمة تشغيل مكتملة.</p>
       <div class="mini-actions">
-        <button id="cacheBtn">تحديث الأوفلاين</button>
+        <button id="cacheBtn">تحديث كاش الواجهة</button>
         <button onclick="location.href='../g2all/index.html'">النسخة القديمة</button>
       </div>
     </aside>
@@ -108,9 +108,9 @@
     route = routeFor(n);
     if (route) {
       if (route.experimental) {
-        badge.textContent = 'تجريبي';
+        badge.textContent = 'صفحة بحثية';
         badge.className = 'badge preview';
-        activateText.textContent = 'فتح صفحة 14.00';
+        activateText.textContent = 'عرض معلومات 14.00';
       } else {
         badge.textContent = 'مدعوم';
         badge.className = 'badge ok';
@@ -144,7 +144,7 @@
     bar.style.width = '35%';
     setTimeout(function(){
       bar.style.width = '72%';
-      runText.textContent = 'فتح ملفات التشغيل المناسبة...';
+      runText.textContent = 'الانتقال إلى مسار التشغيل الأصلي...';
       setTimeout(function(){
         bar.style.width = '100%';
         location.href = route.url;
@@ -164,13 +164,13 @@
       var s = window.applicationCache.status;
       if (s === 0) {
         off.className = 'offline warn';
-        offText.textContent = 'أول تحميل مطلوب';
+        offText.textContent = 'الواجهة تحتاج كاش';
       } else if (s === 3 || s === 4) {
         off.className = 'offline loading';
-        offText.textContent = 'جاري تجهيز الأوفلاين';
+        offText.textContent = 'جاري حفظ الواجهة';
       } else {
         off.className = 'offline ready';
-        offText.textContent = 'Offline Ready';
+        offText.textContent = 'الواجهة محفوظة فقط';
       }
     } catch(e) {
       offText.textContent = 'Offline';
@@ -189,7 +189,7 @@
       if (window.applicationCache) {
         window.applicationCache.update();
         off.className = 'offline loading';
-        offText.textContent = 'جاري فحص الكاش';
+        offText.textContent = 'جاري فحص كاش الواجهة';
       }
     } catch(e) {
       offText.textContent = 'الكاش مثبت بالفعل';
